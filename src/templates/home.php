@@ -16,12 +16,12 @@
                 <strong>Example 2</strong>: Handle upload with PSR-7 and the S3 Client
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="/example3" class="list-group-item list-group-item-action">
                 <strong>Example 3</strong>: Handle upload with PSR-7 and Flysystem
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <strong>Example 4</strong>: Handle upload with PSR-7 and the AWS SDK's <code>S3PostObject</code>
+            <a href="/example4" class="list-group-item list-group-item-action">
+                <strong>Example 4</strong>: Handle upload with PSR-7 and the AWS SDK's S3 <code>PostObject</code>
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
         </div>

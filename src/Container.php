@@ -3,23 +3,24 @@
 namespace Jeremeamia\S3Demo;
 
 use Aws\S3\S3Client;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\Filesystem;
 
 class Container
 {
-    /** @var S3Client Singleton S3 client. */
-    private $s3Client;
-
+    /**
+     * Creates an S3 client.
+     *
+     * Assumes that the credentials are in the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment vars.
+     *
+     * @return S3Client
+     */
     public function getS3Client(): S3Client
     {
-        // Create an S3 client. Assumes credentials are in the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars.
-        if (!$this->s3Client) {
-            $this->s3Client = new S3Client([
-                'version' => 'latest',
-                'region' => $this->getAwsRegion(),
-            ]);
-        }
-
-        return $this->s3Client;
+        return new S3Client([
+            'version' => 'latest',
+            'region' => $this->getAwsRegion(),
+        ]);
     }
 
     public function getS3Bucket(): string
@@ -40,5 +41,12 @@ class Container
         }
 
         return $region;
+    }
+
+    public function getFlysystem(): Filesystem
+    {
+        $adapter = new AwsS3Adapter($this->getS3Client(), $this->getS3Bucket());
+
+        return new Filesystem($adapter, ['visibility' => 'public']);
     }
 }

@@ -4,7 +4,7 @@
         <h3 class="mb-3"><span class="text-muted">Details <i class="fas fa-info-circle fa-md"></i></span></h3>
         <p>The list on this page is a list of all the object keys in the bucket.</p>
         <p>For the sake of the demo, there is a delete button on each key if you need to remove it.</p>
-        <p><strong>Note:</strong> It's not a good idea to list large buckets without pagination.</p>
+        <p><b>Note:</b> It's not a good idea to list large buckets without pagination.</p>
     </div>
 
     <div class="col-md-8 order-md-1">

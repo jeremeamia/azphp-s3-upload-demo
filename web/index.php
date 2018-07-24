@@ -13,5 +13,9 @@ require __DIR__ . '/../vendor/autoload.php';
     ->route('POST', '/example1', Controllers\UploadProxyPlain::class)
     ->route('GET', '/example2', Controllers\UploadProxyPsr7::class)
     ->route('POST', '/example2', Controllers\UploadProxyPsr7::class)
+    ->route('GET', '/example3', Controllers\UploadProxyFlysystem::class)
+    ->route('POST', '/example3', Controllers\UploadProxyFlysystem::class)
+    ->route('GET', '/example4', Controllers\UploadS3Post::class)
+    ->route('POST', '/example4', Controllers\UploadS3Post::class) // @TODO this might change.
     ->route('GET', '/delete-object', Controllers\DeleteObject::class)
     ->run();
