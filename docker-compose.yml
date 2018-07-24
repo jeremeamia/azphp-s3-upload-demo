@@ -10,7 +10,10 @@ services:
   php:
     image: php:7-fpm
     environment:
-      - HELLO_NAME=${HELLO_NAME}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
     volumes:
       - .:/code
       - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf

@@ -9,7 +9,7 @@ class Home extends Controller
 {
     public function handleRequest(): ResponseInterface
     {
-        return $this->respondWith($this->renderTemplate('home', [
+        return $this->html($this->renderTemplate('home', [
             'name' => getenv('HELLO_NAME') ?: 'World',
         ]));
     }

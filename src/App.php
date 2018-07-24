@@ -29,6 +29,8 @@ class App
 
     public function run(ServerRequestInterface $request = null): void
     {
+        session_start();
+
         try {
             $request = $request ?? ServerRequest::fromGlobals();
             $response = $this->getController($request)->handleRequest();
@@ -39,6 +41,8 @@ class App
                 "<h1>Error</h1><p>{$error->getMessage()}</p>"
             );
         }
+
+        session_write_close();
 
         $this->emitResponse($response);
     }
