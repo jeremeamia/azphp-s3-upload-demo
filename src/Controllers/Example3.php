@@ -10,6 +10,10 @@ class Example3 extends Controller
 {
     use CanMapPrefix;
 
+    /**
+     * @return ResponseInterface
+     * @throws \League\Flysystem\FileExistsException
+     */
     public function handleRequest(): ResponseInterface
     {
         if ($this->request->getMethod() !== 'POST') {

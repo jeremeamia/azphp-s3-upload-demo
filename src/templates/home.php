@@ -3,6 +3,7 @@
     <div class="col-md-4 order-md-2">
         <h3 class="mb-3"><span class="text-muted">Details <i class="fas fa-info-circle fa-md"></i></span></h3>
         <p>Choose one of the examples.</p>
+        <p><i>OR&hellip;</i> choose an administrative action.</p>
     </div>
 
     <div class="col-md-8 order-md-1">
@@ -26,7 +27,7 @@
             </a>
         </div>
 
-        <h3 class="mb-3">Other Actions</h3>
+        <h3 class="mb-3">Administrative Actions</h3>
         <div class="list-group mb-5">
             <a href="/create-bucket" class="list-group-item list-group-item-action">
                 Make sure that the S3 Bucket is created
