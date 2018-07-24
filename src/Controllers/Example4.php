@@ -6,6 +6,8 @@ use Aws\S3\PostObjectV4;
 use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
+use function GuzzleHttp\Psr7\uri_for;
+
 class Example4 extends Controller
 {
     public function handleRequest(): ResponseInterface
@@ -26,17 +28,18 @@ class Example4 extends Controller
     private function buildS3Post(): PostObjectV4
     {
         $bucket = $this->container->getS3Bucket();
+        $successActionRedirect = (string) uri_for($this->container->getAppHost())->withPath('upload-complete');
 
         $fields = [
             'acl' => 'public-read',
-            'success_action_redirect' => $this->container->getAppHost() . '/upload-complete',
+            'success_action_redirect' => $successActionRedirect,
         ];
 
         $policy = [
             ['acl' => 'public-read'],
             ['bucket' => $bucket],
+            ['eq', '$success_action_redirect', $successActionRedirect],
             ['starts-with', '$key', 'assets/'],
-            ['starts-with', '$success_action_redirect', ''],
             ['starts-with', '$fileCategory', ''],
             ['starts-with', '$fileTitle', ''],
         ];
