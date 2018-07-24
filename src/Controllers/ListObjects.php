@@ -10,13 +10,12 @@ class ListObjects extends Controller
     public function handleRequest(): ResponseInterface
     {
         $bucket = $this->container->getS3Bucket();
-
         $objects = $this->container->getS3Client()
             ->getPaginator('ListObjects', [
                 'Bucket' => $bucket,
             ])
             ->search('Contents[].Key');
 
-        return $this->html($this->renderTemplate('list', compact('bucket', 'objects')));
+        return $this->view('list', compact('bucket', 'objects'));
     }
 }

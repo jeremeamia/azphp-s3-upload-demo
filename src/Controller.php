@@ -30,17 +30,39 @@ abstract class Controller
 
     abstract public function handleRequest(): ResponseInterface;
 
+    protected function alert(string $type, string $message): self
+    {
+        static $alertTypeMap = [
+            'error'   => ['type' => 'danger',  'title' => 'Error'],
+            'warning' => ['type' => 'warning', 'title' => 'Warning'],
+            'success' => ['type' => 'success', 'title' => 'Success'],
+        ];
+
+        if (!isset($alertTypeMap[$type])) {
+            throw new \RuntimeException("The alert type \"{$type}\" is invalid.");
+        }
+
+        $_SESSION['alerts'][] = $alertTypeMap[$type] + compact('message');
+
+        return $this;
+    }
+
     protected function html(string $body): ResponseInterface
     {
         return $this->response->withBody(stream_for($body));
     }
 
-    protected function redirect(string $path, int $status = 302): ResponseInterface
+    protected function view(string $file, array $data = []): ResponseInterface
     {
-        return new Response($status, ['Location' => $path]);
+        return $this->html($this->renderTemplate($file, $data));
     }
 
-    protected function renderTemplate(string $_file, array $_data = []): string
+    protected function redirect(string $path): ResponseInterface
+    {
+        return new Response(302, ['Location' => $path]);
+    }
+
+    private function renderTemplate(string $_file, array $_data = []): string
     {
         // Get and verify template filename.
         $_file = __DIR__ . '/templates/' . $_file . '.php';
@@ -63,11 +85,6 @@ abstract class Controller
 
         // Return the rendered content from the buffer.
         return ob_get_clean();
-    }
-
-    protected function addAlert(string $type, string $title, string $message): void
-    {
-        $_SESSION['alerts'][] = compact('type', 'title', 'message');
     }
 
     private function getAlerts(): array

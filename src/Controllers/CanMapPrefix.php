@@ -2,15 +2,13 @@
 
 namespace Jeremeamia\S3Demo\Controllers;
 
-use Jeremeamia\S3Demo\Controller;
-
-abstract class HandleUpload extends Controller
+trait CanMapPrefix
 {
-    protected function getPrefix(string $category): string
+    private function mapCategoryToPrefix(string $category): string
     {
         static $prefixMap = [
-            'images' => 'assets/images',
-            'scripts' => 'assets/scripts',
+            'images'      => 'assets/images',
+            'scripts'     => 'assets/scripts',
             'stylesheets' => 'assets/stylesheets',
         ];
 

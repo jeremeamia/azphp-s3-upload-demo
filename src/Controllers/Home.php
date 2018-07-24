@@ -9,8 +9,6 @@ class Home extends Controller
 {
     public function handleRequest(): ResponseInterface
     {
-        return $this->html($this->renderTemplate('home', [
-            'name' => getenv('HELLO_NAME') ?: 'World',
-        ]));
+        return $this->view('home');
     }
 }

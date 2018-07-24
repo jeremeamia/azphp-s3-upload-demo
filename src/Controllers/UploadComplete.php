@@ -2,9 +2,10 @@
 
 namespace Jeremeamia\S3Demo\Controllers;
 
+use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
-class UploadComplete extends HandleUpload
+class UploadComplete extends Controller
 {
     public function handleRequest(): ResponseInterface
     {
@@ -14,8 +15,7 @@ class UploadComplete extends HandleUpload
         }
 
         [$_, $category, $title] = explode('/', $query['key']);
-        $this->addAlert('success', 'Success', "Uploaded {$title} to category {$category}.");
 
-        return $this->redirect('/');
+        return $this->alert('success', "Uploaded {$title} to category {$category}.")->redirect('/');
     }
 }

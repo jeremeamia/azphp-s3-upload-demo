@@ -3,16 +3,20 @@
 namespace Jeremeamia\S3Demo\Controllers;
 
 use GuzzleHttp\Psr7\UploadedFile;
+use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
-class UploadProxyFlysystem extends HandleUpload
+class Example3 extends Controller
 {
+    use CanMapPrefix;
+
     public function handleRequest(): ResponseInterface
     {
         if ($this->request->getMethod() !== 'POST') {
-            return $this->html($this->renderTemplate('example3', [
-                'action' => '/example3'
-            ]));
+            return $this->view('example3', [
+                'action' => '/example3',
+                'subtitle' => 'PSR-7 + Flysystem',
+            ]);
         }
 
         $data = $this->request->getParsedBody();
@@ -20,18 +24,15 @@ class UploadProxyFlysystem extends HandleUpload
         $file = $this->request->getUploadedFiles()['file'] ?? null;
 
         if (!isset($data['fileTitle'], $data['fileCategory'], $file)) {
-            $this->addAlert('danger', 'Error', 'Invalid file upload.');
-            return $this->redirect('/');
+            $this->alert('error', 'Invalid file upload.')->redirect('/');
         }
 
-        $prefix = $this->getPrefix($_POST['fileCategory']);
+        $prefix = $this->mapCategoryToPrefix($_POST['fileCategory']);
         $this->container->getFlysystem()->writeStream(
             "{$prefix}/{$data['fileTitle']}",
             $file->getStream()->detach()
         );
 
-        $this->addAlert('success', 'Success', "Uploaded {$data['fileTitle']} to category {$data['fileCategory']}.");
-
-        return $this->redirect('/');
+        return $this->alert('success', "Uploaded {$data['fileTitle']} to category {$data['fileCategory']}.")->redirect('/');
     }
 }

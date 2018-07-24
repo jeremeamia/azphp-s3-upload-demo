@@ -1,6 +1,6 @@
 <form id="uploadForm" class="needs-validation" action="<?= $action ?>" method="post" enctype="multipart/form-data">
 
-    <h3 class="mb-3">Upload to S3</h3>
+    <h3 class="mb-3">Upload to S3<?= isset($subtitle) ? " - {$subtitle}" : '' ?></h3>
 
     <div class="row">
         <div class="col-md-6 mb-3">

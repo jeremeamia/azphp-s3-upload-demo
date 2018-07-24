@@ -16,12 +16,12 @@ class CreateBucket extends Controller
             $this->container->getS3Client()->createBucket([
                 'Bucket' => $bucket,
             ]);
-            $this->addAlert('success', 'Success', "The {$bucket} bucket was created.");
-        } catch (S3Exception $ex) {
-            if ($ex->getStatusCode() === 409) {
-                $this->addAlert('warning', 'Notice', "The {$bucket} bucket has already been created.");
+            $this->alert('success', "The {$bucket} bucket was created.");
+        } catch (S3Exception $err) {
+            if ($err->getStatusCode() === 409) {
+                $this->alert('warning', "The {$bucket} bucket has already been created.");
             } else {
-                throw $ex;
+                $this->alert('error', "The {$bucket} bucket could not be created. {$err->getMessage()}");
             }
         }
 

@@ -20,8 +20,6 @@ class DeleteObject extends Controller
             'Key' => $key,
         ]);
 
-        $this->addAlert('success', 'Success', "Deleted the object with key {$key}.");
-
-        return $this->redirect('/list-objects');
+        return $this->alert('success', "Deleted the object with key {$key}.")->redirect('/list-objects');
     }
 }

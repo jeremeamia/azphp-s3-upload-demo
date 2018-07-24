@@ -3,18 +3,20 @@
 namespace Jeremeamia\S3Demo\Controllers;
 
 use Aws\S3\PostObjectV4;
+use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
-class UploadS3Post extends HandleUpload
+class Example4 extends Controller
 {
     public function handleRequest(): ResponseInterface
     {
         $s3Post = $this->buildS3Post();
 
-        return $this->html($this->renderTemplate('example4', [
+        return $this->view('example4', [
             'action' => $s3Post->getFormAttributes()['action'],
+            'subtitle' => 'PSR-7 + PostObject',
             'hiddenFields' => $s3Post->getFormInputs(),
-        ]));
+        ]);
     }
 
     /**
