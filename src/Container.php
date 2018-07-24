@@ -3,8 +3,7 @@
 namespace Jeremeamia\S3Demo;
 
 use Aws\S3\S3Client;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
-use League\Flysystem\Filesystem;
+use League\Flysystem\{AwsS3v3\AwsS3Adapter, Filesystem};
 
 class Container
 {

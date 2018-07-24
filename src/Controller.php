@@ -3,8 +3,7 @@
 namespace Jeremeamia\S3Demo;
 
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 use function GuzzleHttp\Psr7\stream_for;
 

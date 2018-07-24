@@ -2,10 +2,8 @@
 
 namespace Jeremeamia\S3Demo;
 
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use GuzzleHttp\Psr7\{Response, ServerRequest};
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class App
 {
