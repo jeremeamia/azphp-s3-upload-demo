@@ -10,15 +10,15 @@
         <h3 class="mb-3">Examples</h3>
         <div class="list-group mb-5">
             <a href="/example1" class="list-group-item list-group-item-action">
-                <strong>Example 1</strong>: Handle upload with superglobals and the S3 Client
+                <strong>Example 1</strong>: Handle upload with superglobals and the AWS SDK's S3 Client
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
             <a href="/example2" class="list-group-item list-group-item-action">
-                <strong>Example 2</strong>: Handle upload with PSR-7 and the S3 Client
+                <strong>Example 2</strong>: Handle upload with PSR-7 and the AWS SDK's S3 Client
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
             <a href="/example3" class="list-group-item list-group-item-action">
-                <strong>Example 3</strong>: Handle upload with PSR-7 and Flysystem
+                <strong>Example 3</strong>: Handle upload with PSR-7 and Flysystem (with AWS SDK adapter)
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
             <a href="/example4" class="list-group-item list-group-item-action">
