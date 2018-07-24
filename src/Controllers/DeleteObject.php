@@ -22,6 +22,6 @@ class DeleteObject extends Controller
 
         $this->addAlert('success', 'Success', "Deleted the object with key {$key}.");
 
-        return $this->redirect('/');
+        return $this->redirect('/list-objects');
     }
 }

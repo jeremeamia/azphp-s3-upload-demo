@@ -17,20 +17,20 @@ class UploadProxyFlysystem extends HandleUpload
 
         $data = $this->request->getParsedBody();
         /** @var UploadedFile $file */
-        $file = $this->request->getUploadedFiles()['fileUpload'] ?? null;
+        $file = $this->request->getUploadedFiles()['file'] ?? null;
 
-        if (!isset($data['fileName'], $data['fileCategory'], $file)) {
+        if (!isset($data['fileTitle'], $data['fileCategory'], $file)) {
             $this->addAlert('danger', 'Error', 'Invalid file upload.');
             return $this->redirect('/');
         }
 
         $prefix = $this->getPrefix($_POST['fileCategory']);
         $this->container->getFlysystem()->writeStream(
-            "{$prefix}/{$data['fileName']}",
+            "{$prefix}/{$data['fileTitle']}",
             $file->getStream()->detach()
         );
 
-        $this->addAlert('success', 'Success', "Uploaded {$data['fileName']} to category {$data['fileCategory']}.");
+        $this->addAlert('success', 'Success', "Uploaded {$data['fileTitle']} to category {$data['fileCategory']}.");
 
         return $this->redirect('/');
     }

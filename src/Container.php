@@ -43,6 +43,20 @@ class Container
         return $region;
     }
 
+    public function getAppHost(): string
+    {
+        $appHost = getenv('APP_HOST');
+        if (!$appHost) {
+            throw new \RuntimeException('Missing config value for APP_HOST.');
+        }
+
+        return $appHost;
+    }
+
+    /**
+     * @return Filesystem
+     * @link https://flysystem.thephpleague.com/docs/adapter/aws-s3/
+     */
     public function getFlysystem(): Filesystem
     {
         $adapter = new AwsS3Adapter($this->getS3Client(), $this->getS3Bucket());

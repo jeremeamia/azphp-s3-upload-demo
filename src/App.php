@@ -29,9 +29,8 @@ class App
 
     public function run(ServerRequestInterface $request = null): void
     {
-        session_start();
-
         try {
+            session_start();
             $request = $request ?? ServerRequest::fromGlobals();
             $response = $this->getController($request)->handleRequest();
         } catch (\Throwable $error) {
@@ -40,9 +39,9 @@ class App
                 ['Content-Type' => 'text/html'],
                 "<h1>Error</h1><p>{$error->getMessage()}</p>"
             );
+        } finally {
+            session_write_close();
         }
-
-        session_write_close();
 
         $this->emitResponse($response);
     }

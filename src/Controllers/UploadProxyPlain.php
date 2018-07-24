@@ -14,7 +14,7 @@ class UploadProxyPlain extends HandleUpload
             ]));
         }
 
-        if (!isset($_POST['fileName'], $_POST['fileCategory'], $_FILES['fileUpload'])) {
+        if (!isset($_POST['fileTitle'], $_POST['fileCategory'], $_FILES['file'])) {
             $this->addAlert('danger', 'Error', 'Invalid file upload.');
             return $this->redirect('/');
         }
@@ -22,12 +22,12 @@ class UploadProxyPlain extends HandleUpload
         $prefix = $this->getPrefix($_POST['fileCategory']);
         $this->container->getS3Client()->putObject([
             'Bucket' => $this->container->getS3Bucket(),
-            'Key' => "{$prefix}/{$_POST['fileName']}",
-            'SourceFile' => $_FILES['fileUpload']['tmp_name'],
+            'Key' => "{$prefix}/{$_POST['fileTitle']}",
+            'SourceFile' => $_FILES['file']['tmp_name'],
             'ACL' => 'public-read',
         ]);
 
-        $this->addAlert('success', 'Success', "Uploaded {$_POST['fileName']} to category {$_POST['fileCategory']}.");
+        $this->addAlert('success', 'Success', "Uploaded {$_POST['fileTitle']} to category {$_POST['fileCategory']}.");
 
         $this->redirect('/');
     }

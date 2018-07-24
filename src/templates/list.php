@@ -12,7 +12,7 @@
             <a href="/"><i class="fas fa-angle-left fa-md"></i> Go back</a>
         </div>
 
-        <h3 class="mb-3">Object in <?= $bucket ?></h3>
+        <h3 class="mb-3">Objects in <code><?= $bucket ?></code></h3>
         <ul class="list-group mb-5">
             <?php foreach ($objects as $key): ?>
                 <li class="list-group-item">
