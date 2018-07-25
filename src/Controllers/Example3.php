@@ -31,7 +31,7 @@ class Example3 extends Controller
             $this->alert('error', 'Invalid file upload.')->redirect('/');
         }
 
-        $prefix = $this->mapCategoryToPrefix($_POST['fileCategory']);
+        $prefix = $this->mapCategoryToPrefix($data['fileCategory']);
         $this->container->getFlysystem()->writeStream(
             "{$prefix}/{$data['fileTitle']}",
             $file->getStream()->detach()
