@@ -20,82 +20,39 @@ abstract class Controller
     /** @var ResponseInterface */
     protected $response;
 
+    /** @var Alerts */
+    private $alerts;
+
     public function __construct(Container $container, ServerRequestInterface $request, ResponseInterface $response)
     {
         $this->container = $container;
         $this->request = $request;
         $this->response = $response;
+        $this->alerts = new Alerts();
     }
 
     abstract public function handleRequest(): ResponseInterface;
 
-    protected function alert(string $type, string $message): self
-    {
-        static $alertTypeMap = [
-            'error'   => ['type' => 'danger',  'title' => 'Error'],
-            'warning' => ['type' => 'warning', 'title' => 'Warning'],
-            'success' => ['type' => 'success', 'title' => 'Success'],
-        ];
-
-        if (!isset($alertTypeMap[$type])) {
-            throw new \RuntimeException("The alert type \"{$type}\" is invalid.");
-        }
-
-        $_SESSION['alerts'][] = $alertTypeMap[$type] + compact('message');
-
-        return $this;
-    }
-
-    protected function html(string $body): ResponseInterface
-    {
-        return $this->response->withBody(stream_for($body));
-    }
-
     protected function view(string $file, array $data = []): ResponseInterface
     {
-        return $this->html($this->renderTemplate($file, $data));
+        $view = new View($file, $data + ['alerts' => $this->alerts]);
+
+        return $this->response
+            ->withHeader('Content-Type', 'text/html')
+            ->withBody(stream_for($view->render()));
     }
 
     protected function redirect(string $path): ResponseInterface
     {
-        return new Response(302, ['Location' => $path]);
+        return $this->response
+            ->withHeader('Location', $path)
+            ->withStatus(302);
     }
 
-    private function renderTemplate(string $_file, array $_data = []): string
+    protected function alert(string $type, string $message): self
     {
-        // Get and verify template filename.
-        $_file = __DIR__ . '/templates/' . $_file . '.php';
-        if (!is_readable($_file)) {
-            throw new \RuntimeException("Missing template: {$_file}");
-        }
+        $this->alerts->add($type, $message);
 
-        // Get alerts.
-        $_alerts = $this->getAlerts();
-
-        // Extract data into scope.
-        extract($_data, EXTR_OVERWRITE);
-
-        // Include the template into a buffer to capture the rendered content.
-        ob_start();
-        include __DIR__ . '/templates/header.php';
-        /** @noinspection PhpIncludeInspection */
-        include $_file;
-        include __DIR__ . '/templates/footer.php';
-
-        // Return the rendered content from the buffer.
-        return ob_get_clean();
-    }
-
-    private function getAlerts(): array
-    {
-        $alerts = [];
-        if (isset($_SESSION['alerts'])) {
-            $alerts = array_map(function (array $alert) {
-                return (object) $alert;
-            }, $_SESSION['alerts']);
-            unset($_SESSION['alerts']);
-        }
-
-        return $alerts;
+        return $this;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Jeremeamia\S3Demo\Controllers;
 
+use Jeremeamia\S3Demo\Alerts;
 use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
@@ -19,7 +20,7 @@ class Example1 extends Controller
         }
 
         if (!isset($_POST['fileTitle'], $_POST['fileCategory'], $_FILES['file'])) {
-            return $this->alert('error', 'Invalid file upload.')->redirect('/');
+            return $this->alert(Alerts::ERROR, 'Invalid file upload. Missing required fields.')->redirect('/');
         }
 
         $prefix = $this->mapCategoryToPrefix($_POST['fileCategory']);
@@ -30,6 +31,7 @@ class Example1 extends Controller
             'ACL' => 'public-read',
         ]);
 
-        return $this->alert('success', "Uploaded {$_POST['fileTitle']} to category {$_POST['fileCategory']}.")->redirect('/');
+        return $this->alert(Alerts::SUCCESS, "Uploaded {$_POST['fileTitle']} to category {$_POST['fileCategory']}.")
+            ->redirect('/');
     }
 }

@@ -3,6 +3,7 @@
 namespace Jeremeamia\S3Demo\Controllers;
 
 use GuzzleHttp\Psr7\UploadedFile;
+use Jeremeamia\S3Demo\Alerts;
 use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
@@ -24,7 +25,7 @@ class Example2 extends Controller
         $file = $this->request->getUploadedFiles()['file'] ?? null;
 
         if (!isset($data['fileTitle'], $data['fileCategory'], $file)) {
-            return $this->alert('error', 'Invalid file upload.')->redirect('/');
+            return $this->alert(Alerts::ERROR, 'Invalid file upload.')->redirect('/');
         }
 
         $prefix = $this->mapCategoryToPrefix($data['fileCategory']);
@@ -35,6 +36,7 @@ class Example2 extends Controller
             'ACL' => 'public-read',
         ]);
 
-        return $this->alert('success', "Uploaded {$data['fileTitle']} to category {$data['fileCategory']}.")->redirect('/');
+        return $this->alert(Alerts::SUCCESS, "Uploaded {$data['fileTitle']} to category {$data['fileCategory']}.")
+            ->redirect('/');
     }
 }

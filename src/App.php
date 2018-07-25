@@ -5,6 +5,8 @@ namespace Jeremeamia\S3Demo;
 use GuzzleHttp\Psr7\{Response, ServerRequest};
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
+use function GuzzleHttp\Psr7\stream_for;
+
 class App
 {
     /** @var Container */
@@ -17,7 +19,15 @@ class App
     {
         $this->container = $container ?? new Container();
     }
-    
+
+    /**
+     * Define a route that maps an HTTP method and a path to a particular Controller class.
+     *
+     * @param string $method
+     * @param string $path
+     * @param string $controller
+     * @return App
+     */
     public function route(string $method, string $path, string $controller): self
     {
         $this->routes[$method][$path] = $controller;
@@ -27,24 +37,35 @@ class App
 
     public function run(ServerRequestInterface $request = null): void
     {
+        // Create a default PSR-7 response.
+        $response = new Response();
+
         try {
+            // Start the session (mostly for alerts).
             session_start();
+
+            // Get the PSR-7 request (Guzzle implements this for us).
             $request = $request ?? ServerRequest::fromGlobals();
-            $response = $this->getController($request)->handleRequest();
+
+            // Router the request to a Controller to handle the logic.
+            $response = $this->getController($request, $response)->handleRequest();
         } catch (\Throwable $error) {
-            $response = new Response(
-                $error->getCode() ?: 500,
-                ['Content-Type' => 'text/html'],
-                "<h1>Error</h1><p>{$error->getMessage()}</p>"
-            );
+            // Update response with an error page content, if there is an uncaught exception.
+            $view = new View('error', compact('error'));
+            $response = $response
+                ->withStatus(500)
+                ->withHeader('Content-Type', 'text/html')
+                ->withBody(stream_for($view->render()));
         } finally {
+            // Close the session prior to emitting the response.
             session_write_close();
         }
 
+        // Emit the response headers and body.
         $this->emitResponse($response);
     }
 
-    private function getController(ServerRequestInterface $request): Controller
+    private function getController(ServerRequestInterface $request, ResponseInterface $response): Controller
     {
         $method = $request->getMethod();
         $path = $request->getUri()->getPath();
@@ -58,7 +79,7 @@ class App
             throw new \RuntimeException("Invalid controller: {$controller}.");
         }
 
-        return new $controller($this->container, $request, new Response(200, ['Content-Type' => 'text/html']));
+        return new $controller($this->container, $request, $response);
     }
 
     private function emitResponse(ResponseInterface $response): void

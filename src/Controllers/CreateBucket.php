@@ -3,6 +3,7 @@
 namespace Jeremeamia\S3Demo\Controllers;
 
 use Aws\S3\Exception\S3Exception;
+use Jeremeamia\S3Demo\Alerts;
 use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,12 +17,12 @@ class CreateBucket extends Controller
             $this->container->getS3Client()->createBucket([
                 'Bucket' => $bucket,
             ]);
-            $this->alert('success', "The {$bucket} bucket was created.");
+            $this->alert(Alerts::SUCCESS, "The {$bucket} bucket was created.");
         } catch (S3Exception $err) {
             if ($err->getStatusCode() === 409) {
-                $this->alert('warning', "The {$bucket} bucket has already been created.");
+                $this->alert(Alerts::WARNING, "The {$bucket} bucket has already been created.");
             } else {
-                $this->alert('error', "The {$bucket} bucket could not be created. {$err->getMessage()}");
+                $this->alert(Alerts::ERROR, "The {$bucket} bucket could not be created. {$err->getMessage()}");
             }
         }
 

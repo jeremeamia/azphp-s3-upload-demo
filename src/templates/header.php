@@ -35,10 +35,10 @@
         </div>
     </div>
 
-    <?php if (!empty($_alerts)): ?>
+    <?php if (!empty($alerts)): ?>
     <div class="row">
         <div class="col">
-            <?php foreach ($_alerts as $alert): ?>
+            <?php foreach ($alerts as $alert): ?>
                 <div class="alert alert-<?= $alert->type ?> alert-dismissible fade show" role="alert">
                     <strong><?= $alert->title ?></strong>: <?= $alert->message ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -41,5 +41,3 @@
     </div>
 
 </div>
-
-<?php //include 'upload.php' ?>

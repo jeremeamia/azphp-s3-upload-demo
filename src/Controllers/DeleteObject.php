@@ -2,6 +2,7 @@
 
 namespace Jeremeamia\S3Demo\Controllers;
 
+use Jeremeamia\S3Demo\Alerts;
 use Jeremeamia\S3Demo\Controller;
 use Psr\Http\Message\ResponseInterface;
 
@@ -20,6 +21,6 @@ class DeleteObject extends Controller
             'Key' => $key,
         ]);
 
-        return $this->alert('success', "Deleted the object with key {$key}.")->redirect('/list-objects');
+        return $this->alert(Alerts::SUCCESS, "Deleted the object with key {$key}.")->redirect('/list-objects');
     }
 }
