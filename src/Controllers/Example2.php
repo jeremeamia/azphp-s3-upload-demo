@@ -27,7 +27,7 @@ class Example2 extends Controller
             return $this->alert('error', 'Invalid file upload.')->redirect('/');
         }
 
-        $prefix = $this->mapCategoryToPrefix($_POST['fileCategory']);
+        $prefix = $this->mapCategoryToPrefix($data['fileCategory']);
         $this->container->getS3Client()->putObject([
             'Bucket' => $this->container->getS3Bucket(),
             'Key' => "{$prefix}/{$data['fileTitle']}",
