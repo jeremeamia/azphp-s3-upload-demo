@@ -25,6 +25,10 @@
                 <strong>Example 4</strong>: Handle upload with PSR-7 and the AWS SDK's S3 <code>PostObject</code>
                 <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
             </a>
+            <a href="/example5" class="list-group-item list-group-item-action">
+                <strong>Example 5</strong>: Handle upload with a pre-signed operation using the AWS SDK's S3 Client</code>
+                <div class="float-right"><i class="fas fa-angle-right fa-lg"></i></div>
+            </a>
         </div>
 
         <h3 class="mb-3">Administrative Actions</h3>
