@@ -49,6 +49,18 @@ abstract class Controller
             ->withStatus(302);
     }
 
+    protected function json(array $data): ResponseInterface
+    {
+        return $this->response
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody(stream_for(json_encode($data, JSON_UNESCAPED_SLASHES)));
+    }
+
+    protected function error(): ResponseInterface
+    {
+        return $this->response->withStatus(400);
+    }
+
     protected function alert(string $type, string $message): self
     {
         $this->alerts->add($type, $message);
