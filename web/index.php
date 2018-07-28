@@ -14,6 +14,8 @@ require __DIR__ . '/../vendor/autoload.php';
     ->route('GET',  '/example3',        Controllers\Example3::class)
     ->route('POST', '/example3',        Controllers\Example3::class)
     ->route('GET',  '/example4',        Controllers\Example4::class)
+    ->route('GET',  '/example5',        Controllers\Example5::class)
+    ->route('POST', '/example5',        Controllers\Example5::class)
     ->route('GET',  '/upload-complete', Controllers\UploadComplete::class)
     ->route('GET',  '/create-bucket',   Controllers\CreateBucket::class)
     ->route('GET',  '/list-objects',    Controllers\ListObjects::class)

@@ -16,7 +16,7 @@
         <ul class="list-group mb-5">
             <?php foreach ($objects as $key): ?>
                 <li class="list-group-item object-list-item">
-                    <i class="fas fa-key fa-md"></i>&ensp;<?= $key ?>
+                    <i class="fas fa-key fa-md"></i>&ensp;<a href="<?= $getUrl($key) ?>" target="_blank"><?= $key ?></a>
                     <div class="float-right">
                         <a href="/delete-object?<?= http_build_query(compact('key')) ?>"><i class="fas fa-trash-alt fa-lg"></i></a>
                     </div>
